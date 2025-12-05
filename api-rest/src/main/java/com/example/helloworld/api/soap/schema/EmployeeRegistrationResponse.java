@@ -1,4 +1,4 @@
-package com.example.helloworld.soap.model;
+package com.example.helloworld.api.soap.schema;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -7,15 +7,15 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GreetingResponse", propOrder = {"message", "timestamp"})
-@XmlRootElement(name = "GreetingResponse", namespace = "http://example.com/helloworld/soap")
-public class GreetingResponse {
+@XmlType(name = "EmployeeRegistrationResponse", propOrder = {"message", "recordId"})
+@XmlRootElement(name = "EmployeeRegistrationResponse", namespace = EmployeeRegistrationRequest.NAMESPACE_URI)
+public class EmployeeRegistrationResponse {
 
     @XmlElement(required = true)
     private String message;
 
     @XmlElement(required = true)
-    private String timestamp;
+    private long recordId;
 
     public String getMessage() {
         return message;
@@ -25,11 +25,11 @@ public class GreetingResponse {
         this.message = message;
     }
 
-    public String getTimestamp() {
-        return timestamp;
+    public long getRecordId() {
+        return recordId;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setRecordId(long recordId) {
+        this.recordId = recordId;
     }
 }

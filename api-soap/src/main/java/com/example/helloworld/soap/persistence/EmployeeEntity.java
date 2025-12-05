@@ -1,55 +1,53 @@
-package com.example.helloworld.api.dto;
+package com.example.helloworld.soap.persistence;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.Period;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Positive;
+@Entity
+@Table(name = "employees")
+public class EmployeeEntity {
 
-public class EmployeeRequest {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @NotBlank(message = "First name is required")
+    @Column(name = "first_name", nullable = false, length = 120)
     private String firstName;
 
-    @NotBlank(message = "Last name is required")
+    @Column(name = "last_name", nullable = false, length = 120)
     private String lastName;
 
-    @NotBlank(message = "Document type is required")
+    @Column(name = "document_type", nullable = false, length = 20)
     private String documentType;
 
-    @NotBlank(message = "Document number is required")
+    @Column(name = "document_number", nullable = false, length = 30)
     private String documentNumber;
 
-    @NotNull(message = "Birth date is required")
-    @Past(message = "Birth date must be in the past")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
-    @NotNull(message = "Company entry date is required")
-    @PastOrPresent(message = "Company entry date cannot be in the future")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Column(name = "company_entry_date", nullable = false)
     private LocalDate companyEntryDate;
 
-    @NotBlank(message = "Position is required")
+    @Column(nullable = false, length = 80)
     private String position;
 
-    @NotNull(message = "Salary is required")
-    @Positive(message = "Salary must be positive")
-    private Double salary;
+    @Column(nullable = false, precision = 15, scale = 2)
+    private BigDecimal salary;
 
-    @AssertTrue(message = "Employee must be of legal age")
-    public boolean isAdult() {
-        if (birthDate == null) {
-            return false;
-        }
-        // Ensure the calculation fails fast when the birthday is missing.
-        return Period.between(birthDate, LocalDate.now()).getYears() >= 18;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -108,11 +106,11 @@ public class EmployeeRequest {
         this.position = position;
     }
 
-    public Double getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(Double salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 }

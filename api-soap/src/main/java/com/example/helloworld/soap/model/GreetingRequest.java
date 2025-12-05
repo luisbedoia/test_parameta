@@ -7,18 +7,18 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GreetingRequest", propOrder = {"nombre"})
+@XmlType(name = "GreetingRequest", propOrder = {"name"})
 @XmlRootElement(name = "GreetingRequest", namespace = "http://example.com/helloworld/soap")
 public class GreetingRequest {
 
     @XmlElement(required = false)
-    private String nombre;
+    private String name;
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 }

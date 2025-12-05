@@ -7,7 +7,11 @@ services:
       - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: default
+      EMPLOYEE_SOAP_URL: http://api-soap:8081/ws
     restart: unless-stopped
+    depends_on:
+      - api-soap
+      - mysql
 
   api-soap:
     build:
@@ -15,4 +19,26 @@ services:
       dockerfile: api-soap/Dockerfile
     ports:
       - "8081:8081"
+    environment:
+      EMPLOYEE_DB_URL: jdbc:mysql://mysql:3306/parameta?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      EMPLOYEE_DB_USERNAME: parameta
+      EMPLOYEE_DB_PASSWORD: parameta
     restart: unless-stopped
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: parameta
+      MYSQL_ROOT_PASSWORD: parameta
+      MYSQL_USER: parameta
+      MYSQL_PASSWORD: parameta
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  mysql_data:

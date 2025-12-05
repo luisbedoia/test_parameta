@@ -12,6 +12,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.ws.client.WebServiceIOException;
+import org.springframework.ws.soap.client.SoapFaultClientException;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -31,10 +33,10 @@ public class RestExceptionHandler {
                     .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (first, second) -> first,
                             LinkedHashMap::new));
         } else {
-            errors = Map.of("error", "Error de validacion desconocido");
+            errors = Map.of("error", "Unknown validation error");
         }
 
-        return buildErrorResponse(HttpStatus.BAD_REQUEST, "Se encontraron errores de validacion", errors);
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, "Validation errors were found", errors);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
@@ -42,7 +44,13 @@ public class RestExceptionHandler {
         Map<String, String> errors = ex.getConstraintViolations().stream()
             .collect(Collectors.toMap(violation -> violation.getPropertyPath().toString(),
                 ConstraintViolation::getMessage, (first, second) -> first, LinkedHashMap::new));
-        return buildErrorResponse(HttpStatus.BAD_REQUEST, "Se encontraron errores de validacion", errors);
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, "Validation errors were found", errors);
+    }
+
+    @ExceptionHandler({SoapFaultClientException.class, WebServiceIOException.class, IllegalStateException.class})
+    public ResponseEntity<Map<String, Object>> handleSoapErrors(Exception ex) {
+        return buildErrorResponse(HttpStatus.BAD_GATEWAY, "Unable to reach the SOAP service",
+                Map.of("detail", ex.getMessage() == null ? "Unknown error" : ex.getMessage()));
     }
 
     private ResponseEntity<Map<String, Object>> buildErrorResponse(HttpStatus status, String message,
@@ -51,7 +59,7 @@ public class RestExceptionHandler {
         body.put("timestamp", OffsetDateTime.now().toString());
         body.put("status", status.value());
         body.put("error", message);
-        body.put("detalles", errors);
+        body.put("details", errors);
         return ResponseEntity.status(status).body(body);
     }
 }

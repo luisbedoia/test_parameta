@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://example.com/parameta/employee"
+           xmlns:tns="http://example.com/parameta/employee"
+           elementFormDefault="qualified">
+
+    <xs:complexType name="EmployeeRegistrationRequest">
+        <xs:sequence>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="documentType" type="xs:string"/>
+            <xs:element name="documentNumber" type="xs:string"/>
+            <xs:element name="birthDate" type="xs:date"/>
+            <xs:element name="companyEntryDate" type="xs:date"/>
+            <xs:element name="position" type="xs:string"/>
+            <xs:element name="salary" type="xs:decimal"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="EmployeeRegistrationResponse">
+        <xs:sequence>
+            <xs:element name="message" type="xs:string"/>
+            <xs:element name="recordId" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="EmployeeRegistrationRequest" type="tns:EmployeeRegistrationRequest"/>
+    <xs:element name="EmployeeRegistrationResponse" type="tns:EmployeeRegistrationResponse"/>
+
+</xs:schema>

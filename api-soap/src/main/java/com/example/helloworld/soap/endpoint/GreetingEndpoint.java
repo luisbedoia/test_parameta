@@ -19,12 +19,12 @@ public class GreetingEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GreetingRequest")
     @ResponsePayload
     public GreetingResponse greet(@RequestPayload GreetingRequest request) {
-        String nombreNormalizado = request != null && StringUtils.hasText(request.getNombre())
-                ? request.getNombre()
-                : "Mundo";
+        String normalizedName = request != null && StringUtils.hasText(request.getName())
+            ? request.getName()
+            : "World";
 
         GreetingResponse response = new GreetingResponse();
-        response.setMensaje("Hola " + nombreNormalizado + "!");
+        response.setMessage("Hello " + normalizedName + "!");
         response.setTimestamp(OffsetDateTime.now().toString());
         return response;
     }

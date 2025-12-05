@@ -12,7 +12,7 @@ import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
 
-import com.example.helloworld.soap.endpoint.GreetingEndpoint;
+import com.example.helloworld.soap.endpoint.EmployeeEndpoint;
 
 @EnableWs
 @Configuration
@@ -26,18 +26,18 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return new ServletRegistrationBean<>(servlet, "/ws/*");
     }
 
-    @Bean(name = "greetings")
-    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema greetingSchema) {
+    @Bean(name = "employees")
+    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema employeeSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-        wsdl11Definition.setPortTypeName("GreetingPort");
+        wsdl11Definition.setPortTypeName("EmployeeRegistrationPort");
         wsdl11Definition.setLocationUri("/ws");
-        wsdl11Definition.setTargetNamespace(GreetingEndpoint.NAMESPACE_URI);
-        wsdl11Definition.setSchema(greetingSchema);
+        wsdl11Definition.setTargetNamespace(EmployeeEndpoint.NAMESPACE_URI);
+        wsdl11Definition.setSchema(employeeSchema);
         return wsdl11Definition;
     }
 
     @Bean
-    public XsdSchema greetingSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("wsdl/greeting.xsd"));
+    public XsdSchema employeeSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("wsdl/employee.xsd"));
     }
 }

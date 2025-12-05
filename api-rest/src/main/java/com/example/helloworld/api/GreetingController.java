@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class GreetingController {
 
     @GetMapping
-    public ResponseEntity<Map<String, String>> hello(@RequestParam(defaultValue = "Mundo") String nombre) {
+    public ResponseEntity<Map<String, String>> hello(@RequestParam(defaultValue = "World") String name) {
         Map<String, String> body = Map.of(
-                "mensaje", "Hola " + nombre + "!",
+                "message", "Hello " + name + "!",
                 "timestamp", OffsetDateTime.now().toString());
         return ResponseEntity.ok(body);
     }
