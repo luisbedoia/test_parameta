@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://example.com/helloworld/soap"
+           xmlns:tns="http://example.com/helloworld/soap"
+           elementFormDefault="qualified">
+
+    <xs:element name="GreetingRequest" type="tns:GreetingRequest"/>
+    <xs:complexType name="GreetingRequest">
+        <xs:sequence>
+            <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="GreetingResponse" type="tns:GreetingResponse"/>
+    <xs:complexType name="GreetingResponse">
+        <xs:sequence>
+            <xs:element name="mensaje" type="xs:string"/>
+            <xs:element name="timestamp" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
