@@ -7,29 +7,31 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "GreetingResponse", propOrder = {"message", "timestamp"})
+@XmlType(
+    name = "GreetingResponse",
+    propOrder = {"message", "timestamp"})
 @XmlRootElement(name = "GreetingResponse", namespace = "http://example.com/helloworld/soap")
 public class GreetingResponse {
 
-    @XmlElement(required = true)
-    private String message;
+  @XmlElement(required = true)
+  private String message;
 
-    @XmlElement(required = true)
-    private String timestamp;
+  @XmlElement(required = true)
+  private String timestamp;
 
-    public String getMessage() {
-        return message;
-    }
+  public String getMessage() {
+    return message;
+  }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+  public void setMessage(String message) {
+    this.message = message;
+  }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
+  public String getTimestamp() {
+    return timestamp;
+  }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
+  public void setTimestamp(String timestamp) {
+    this.timestamp = timestamp;
+  }
 }
