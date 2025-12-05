@@ -15,7 +15,6 @@ public class GreetingController {
 
     @GetMapping
     public ResponseEntity<Map<String, String>> hello(@RequestParam(defaultValue = "Mundo") String nombre) {
-        // Se devuelve un payload estructurado por claridad del ejemplo
         Map<String, String> body = Map.of(
                 "mensaje", "Hola " + nombre + "!",
                 "timestamp", OffsetDateTime.now().toString());
